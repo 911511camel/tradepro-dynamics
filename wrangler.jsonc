@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "tradepro-dynamics",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "tradepro.niko.center", "custom_domain": true }
+  ],
+  "assets": { "binding": "ASSETS" },
+  "observability": { "enabled": true }
+}
