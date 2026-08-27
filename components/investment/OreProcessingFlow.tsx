@@ -1,8 +1,8 @@
 // components/investment/OreProcessingFlow.tsx
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, {useState} from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const stages = [
   {
@@ -28,27 +28,29 @@ const stages = [
   },
 ];
 
-export const OreProcessingFlow: React.FC = () => {
+export const OreProcessingFlow: React.FC<{lang?:string}> = ({lang='en'}) => {
+  const ru=lang==='ru'; const reduced=useReducedMotion(); const [paused,setPaused]=useState(false); const play=!reduced&&!paused;
+  const english=[{sub:'Mindanao origin',desc:'Copper and gold ore intake from volcanic deposits.',badge:'Raw material'},{sub:'Crushing and concentration',desc:'Multi-stage crushing and flotation of copper sulphides.',badge:'Concentration'},{sub:'Pyro / hydrometallurgy',desc:'Smelting and electrolytic refining of copper.',badge:'Refining'}];
   return (
     <div className="w-full bg-[#152438]/80 border border-white/10 rounded-xl p-6 lg:p-8 backdrop-blur-md">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-white/10 pb-4">
         <div>
-          <span className="text-xs font-mono text-[#00875A] uppercase tracking-widest">
+          <span className="text-xs font-mono text-[#10B981] uppercase tracking-widest">
             Mineral Processing Value Chain
           </span>
           <h3 className="text-xl font-bold text-white mt-1">
-            Технологическая модель глубокой переработки: Руда ➔ Катодная медь + Золото (BSP)
+            {ru ? 'Переработка: Руда ➔ Катодная медь + Золото (BSP)' : 'Processing: Ore ➔ Cathode Copper + Gold (BSP)'}
           </h3>
         </div>
         <div className="mt-2 md:mt-0 flex items-center space-x-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-ping" />
-          <span className="text-xs font-mono text-gray-400">100% On-Island Value Add</span>
+          <span className="text-xs font-mono text-gray-400">100% On-Island Value Add</span><button type="button" onClick={()=>setPaused(!paused)} className="text-xs text-gray-300 border border-white/30 rounded px-2 py-1" aria-pressed={paused}>{paused ? (ru?'Продолжить':'Resume') : (ru?'Пауза':'Pause')}</button>
         </div>
       </div>
 
       {/* SVG Pipeline Schema */}
       <div className="relative w-full overflow-x-auto py-6">
-        <svg
+        <svg role="img" aria-label={ru?"Переработка руды в медь и золото":"Ore processing into copper and gold"}
           viewBox="0 0 1000 240"
           className="w-full min-w-[760px] h-auto overflow-visible select-none"
         >
@@ -77,7 +79,7 @@ export const OreProcessingFlow: React.FC = () => {
             stroke="url(#lineGrad)"
             strokeWidth="4"
             strokeLinecap="round"
-            initial={{ pathLength: 0 }}
+            initial={reduced ? false : { pathLength: 0 }}
             whileInView={{ pathLength: 1 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 1.5, ease: 'easeInOut' }}
@@ -90,7 +92,7 @@ export const OreProcessingFlow: React.FC = () => {
             stroke="#10B981"
             strokeWidth="3"
             fill="none"
-            initial={{ pathLength: 0 }}
+            initial={reduced ? false : { pathLength: 0 }}
             whileInView={{ pathLength: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, delay: 1.2 }}
@@ -101,7 +103,7 @@ export const OreProcessingFlow: React.FC = () => {
             stroke="#D4AF37"
             strokeWidth="3"
             fill="none"
-            initial={{ pathLength: 0 }}
+            initial={reduced ? false : { pathLength: 0 }}
             whileInView={{ pathLength: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, delay: 1.2 }}
@@ -112,21 +114,21 @@ export const OreProcessingFlow: React.FC = () => {
             r="4"
             fill="#10B981"
             filter="url(#glow)"
-            animate={{
+            animate={play ? {
               cx: [120, 370, 620, 870],
               cy: [120, 120, 120, 60],
-            }}
-            transition={{ repeat: Infinity, duration: 3.5, ease: 'linear' }}
+            } : {cx:120,cy:120}}
+            transition={{ repeat: play ? Infinity : 0, duration: 3.5, ease: 'linear' }}
           />
           <motion.circle
             r="4"
             fill="#D4AF37"
             filter="url(#glow)"
-            animate={{
+            animate={play ? {
               cx: [120, 370, 620, 870],
               cy: [120, 120, 120, 180],
-            }}
-            transition={{ repeat: Infinity, duration: 3.5, delay: 1.7, ease: 'linear' }}
+            } : {cx:120,cy:120}}
+            transition={{ repeat: play ? Infinity : 0, duration: 3.5, delay: 1.7, ease: 'linear' }}
           />
 
           {/* Node 1: Raw Ore */}
@@ -179,14 +181,14 @@ export const OreProcessingFlow: React.FC = () => {
 
       {/* Structured Text Cards below Diagram */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/10 text-xs">
-        {stages.map((stage) => (
+        {stages.map((stage, index) => (
           <div key={stage.id} className="bg-deep-ocean/50 p-4 rounded border border-white/5">
             <div className="flex justify-between items-center mb-1">
-              <span className="text-gold-sand font-mono">{`0${stage.id} // ${stage.badge}`}</span>
+              <span className="text-gold-sand font-mono">{`0${stage.id} // ${ru ? stage.badge : english[index].badge}`}</span>
             </div>
             <div className="text-white font-bold text-sm mb-1">{stage.title}</div>
-            <div className="text-gray-400 mb-2 font-mono text-[11px]">{stage.sub}</div>
-            <p className="text-gray-300 leading-relaxed">{stage.desc}</p>
+            <div className="text-gray-400 mb-2 font-mono text-[11px]">{ru ? stage.sub : english[index].sub}</div>
+            <p className="text-gray-300 leading-relaxed">{ru ? stage.desc : english[index].desc}</p>
           </div>
         ))}
       </div>

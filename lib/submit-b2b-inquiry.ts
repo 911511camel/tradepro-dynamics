@@ -1,6 +1,6 @@
 export interface B2BInquiry {
   name: string; email: string; company: string; product: string;
-  volume: string; incoterms: string; country?: string;
+  volume: string; incoterms: string; country?: string; productId?: string; packaging?: string; packageCount?: string; estimatedWeightKg?: string; leadTime?: string;
 }
 export async function submitLead(payload: Record<string, string>) {
   const response = await fetch('/api/leads', {
@@ -14,5 +14,5 @@ export async function submitLead(payload: Record<string, string>) {
 export function submitB2BInquiry(form: B2BInquiry) {
   return submitLead({leadType:'b2b-export', fullName:form.name, corporateEmail:form.email,
     companyName:form.company, product:form.product, volume:form.volume,
-    incoterms:form.incoterms, country:form.country || ''});
+    incoterms:form.incoterms, country:form.country || '', productId:form.productId || '', packaging:form.packaging || '', packageCount:form.packageCount || '', estimatedWeightKg:form.estimatedWeightKg || '', leadTime:form.leadTime || ''});
 }
