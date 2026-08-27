@@ -1,0 +1,22 @@
+$ORIGIN tradepro-ph.com.
+$TTL 3600
+@ 10800 IN A 118.139.181.29
+admin 10800 IN A 118.139.181.29
+mail 10800 IN A 118.139.181.29
+cpanel 10800 IN CNAME tradepro-ph.com.
+email IN CNAME email.secureserver.net.
+secureserver1._domainkey IN CNAME s1.dkim.tradepro-ph_com.90e.onsecureserver.net.
+secureserver2._domainkey IN CNAME s2.dkim.tradepro-ph_com.90e.onsecureserver.net.
+webdisk 10800 IN CNAME tradepro-ph.com.
+webdisk.admin 10800 IN CNAME tradepro-ph.com.
+whm 10800 IN CNAME tradepro-ph.com.
+www 10800 IN CNAME tradepro-ph.com.
+www.admin 10800 IN CNAME tradepro-ph.com.
+_domainconnect IN CNAME _domainconnect.gd.domaincontrol.com.
+@ IN MX 0 smtp.secureserver.net.
+@ IN MX 10 mailstore1.secureserver.net.
+@ IN TXT "v=spf1 include:secureserver.net -all"
+_cf-custom-hostname IN TXT "5fe5eeae-e8f2-4919-8588-dfe274b5024c"
+_dmarc IN TXT "v=DMARC1; p=reject; rua=mailto:dmarc_rua@onsecureserver.net; adkim=r; aspf=r;"
+_openai-site-verification IN TXT "openai-site-verification=rJCEkO7u6AaUFNKKcKiTlkj5oRKjKbrUWpSX4A2W5YQ"
+_autodiscover._tcp IN SRV 0 0 443 autodiscover.secureserver.net.

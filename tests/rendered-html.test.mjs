@@ -78,14 +78,14 @@ test('server renders localized metadata, language and content; retains language 
  const {default:worker}=await import('../dist/server/index.js');
  const env={ASSETS:{fetch:async()=>new Response('Not found',{status:404})}};
  const context={waitUntil(){},passThroughOnException(){}};
- async function page(path,headers={}){return worker.fetch(new Request('https://tradepro.niko.center'+path,{headers:{accept:'text/html',...headers}}),env,context);}
+ async function page(path,headers={}){return worker.fetch(new Request('https://tradepro-ph.com'+path,{headers:{accept:'text/html',...headers}}),env,context);}
  for(const lang of ['en','ru']){
   const response=await page(`/${lang}/`);assert.equal(response.status,200);
   assert.match(response.headers.get('set-cookie')||'',new RegExp(`tradepro_lang=${lang}`));
   const html=await response.text();
   assert.match(html,new RegExp(`<html lang="${lang}"`));
   assert.match(html,lang==='ru'?/Ориентировочный вес нетто/:/Estimated net weight/);
-  assert.match(html,/<link[^>]+rel="canonical"[^>]+href="https:\/\/tradepro.niko.center\/(en|ru)\/"/);
+  assert.match(html,/<link[^>]+rel="canonical"[^>]+href="https:\/\/tradepro-ph.com\/(en|ru)\/"/);
   assert.match(html,/hreflang="en"/i);assert.match(html,/hreflang="ru"/i);
   const json=html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s);assert.ok(json);
   assert.equal(JSON.parse(json[1])['@graph'].filter(n=>n['@type']==='Product').length,7);

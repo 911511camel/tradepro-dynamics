@@ -18,7 +18,7 @@ Node.js >=22.13; `npm ci`, затем `npm run dev`.
 ## GitHub and Cloudflare deployment
 
 The application runs on Cloudflare Workers (including `/api/leads`), not static GitHub Pages.
-`wrangler.jsonc` targets `tradepro.niko.center` as a Worker Custom Domain. The Cloudflare account must control the active `niko.center` zone. Check existing DNS records before deployment; do not overwrite an existing service without confirmation.
+`wrangler.jsonc` serves `tradepro-ph.com` and `www.tradepro-ph.com` as Worker Custom Domains. Canonical URLs use `https://tradepro-ph.com`. The previous `tradepro.niko.center` hostname remains available during DNS propagation. Mail and legacy hosting subdomains are preserved.
 
 After `npx wrangler login`, run `npm run deploy`. It builds the app and deploys the generated `dist/server/wrangler.json`, including all client assets. For a validation-only upload, run `npm run deploy:check`.
 

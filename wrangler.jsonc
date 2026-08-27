@@ -6,7 +6,9 @@
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "routes": [
-    { "pattern": "tradepro.niko.center", "custom_domain": true }
+    { "pattern": "tradepro.niko.center", "custom_domain": true },
+    { "pattern": "tradepro-ph.com", "custom_domain": true },
+    { "pattern": "www.tradepro-ph.com", "custom_domain": true }
   ],
   "assets": { "binding": "ASSETS" },
   "observability": { "enabled": true }
