@@ -1,15 +1,17 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "tradepro-dynamics",
-  "main": "worker/index.ts",
   "compatibility_date": "2026-08-27",
-  "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "routes": [
     { "pattern": "tradepro.niko.center", "custom_domain": true },
     { "pattern": "tradepro-ph.com", "custom_domain": true },
     { "pattern": "www.tradepro-ph.com", "custom_domain": true }
   ],
-  "assets": { "binding": "ASSETS" },
+  "assets": {
+    "directory": "./static-site",
+    "html_handling": "none",
+    "not_found_handling": "404-page"
+  },
   "observability": { "enabled": true }
 }

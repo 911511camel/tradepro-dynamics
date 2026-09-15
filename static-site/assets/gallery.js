@@ -1,0 +1,1 @@
+document.addEventListener('click',event=>{const trigger=event.target.closest('[data-gallery-open]');if(!trigger)return;const dialog=document.querySelector('#gallery-lightbox');if(!dialog)return;dialog.querySelector('img').src=trigger.dataset.galleryOpen;dialog.showModal()});
